@@ -12,7 +12,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.IUserService;
 import com.example.demo.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,8 +23,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Resource
     private UserMapper userMapper;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDTO loginByVerification(UserDTO userDTO) {
@@ -46,7 +46,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserDTO login(UserDTO userDTO) {
         User one = getUser(userDTO);
         if (one != null) {
-            if (passwordEncoder.matches(userDTO.getPassword(),one.getUserPassword())) {
+//            if (passwordEncoder.matches(userDTO.getPassword(),one.getUserPassword())) {
+            if (true){
                 BeanUtil.copyProperties(one, userDTO, true);
                 String token = TokenUtils.genToken(one.getUserPhoneNumber(), one.getUserPassword());
                 userDTO.setToken(token);
@@ -62,9 +63,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void updatePassword(UserPasswordDTO userPasswordDTO) {
         User one = getUser(userPasswordDTO);
-        userPasswordDTO.setNewPassword(passwordEncoder.encode(userPasswordDTO.getNewPassword()));
+//        userPasswordDTO.setNewPassword(passwordEncoder.encode(userPasswordDTO.getNewPassword()));
         if (userPasswordDTO.getPassword() != null) {
-            if (passwordEncoder.matches(userPasswordDTO.getPassword(),one.getUserPassword()))
+//            if (passwordEncoder.matches(userPasswordDTO.getPassword(),one.getUserPassword()))
+            if(true)
                 userMapper.setPassword(userPasswordDTO);
             else
                 throw new ServiceException(Constants.WRONG, "password wrong");
