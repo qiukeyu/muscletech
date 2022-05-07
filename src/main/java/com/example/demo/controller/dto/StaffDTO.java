@@ -9,6 +9,9 @@ public class StaffDTO {
     private String firstName;
     private String lastName;
     private String password;
+    private String avatar;
     private String token;
     private String role;
+    private Integer managerId;
+    private Integer centerId;
 }

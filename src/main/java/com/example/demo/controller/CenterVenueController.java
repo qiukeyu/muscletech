@@ -21,8 +21,8 @@ public class CenterVenueController {
         return Result.success();
     }
 
-    @PostMapping("/update")
-    public Result update(@RequestBody CenterVenue centervenue){
+    @PostMapping("/{id}")
+    public Result update(@PathVariable Integer id){
 
         return Result.success();
     }
