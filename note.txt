@@ -1,0 +1,17 @@
+修改：
+
+center_venue和venue合为一张表
+venue表加一个实时的剩余人数
+
+DELETE /staff/{id}
+如果id为不存在，还是显示successful
+
+
+GET /venue
+参数为当前登录的员工的信息，返回这个员工所在的运动中心下的所有场馆
+
+待定
+场馆的开放时间
+DELETE *
+所有delete方法需要配置，暂定下面教程的第一种方法
+https://www.cnblogs.com/crazytata/p/10141632.html
