@@ -6,13 +6,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
 import com.example.demo.controller.dto.UserDTO;
 import com.example.demo.controller.dto.UserPasswordDTO;
+import com.example.demo.entity.Staff;
 import com.example.demo.entity.User;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.IUserService;
 import com.example.demo.utils.TokenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,9 +44,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public UserDTO login(UserDTO userDTO) {
         User one = getUser(userDTO);
-        if (one != null) {
+        if (one == null) {
+            throw new ServiceException(Constants.WRONG, "phone number wrong");
+        } else if (one.getUserPassword() == null) {
+            throw new ServiceException(Constants.WRONG, "No password set");
+        } else {
 //            if (passwordEncoder.matches(userDTO.getPassword(),one.getUserPassword())) {
-            if (true){
+            if (true) {
                 BeanUtil.copyProperties(one, userDTO, true);
                 String token = TokenUtils.genToken(one.getUserPhoneNumber(), one.getUserPassword());
                 userDTO.setToken(token);
@@ -55,8 +58,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             } else {
                 throw new ServiceException(Constants.WRONG, "password wrong");
             }
-        } else {
-            throw new ServiceException(Constants.WRONG, "phone number wrong");
         }
     }
 
@@ -66,7 +67,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //        userPasswordDTO.setNewPassword(passwordEncoder.encode(userPasswordDTO.getNewPassword()));
         if (userPasswordDTO.getPassword() != null) {
 //            if (passwordEncoder.matches(userPasswordDTO.getPassword(),one.getUserPassword()))
-            if(true)
+            if (true)
                 userMapper.setPassword(userPasswordDTO);
             else
                 throw new ServiceException(Constants.WRONG, "password wrong");
@@ -77,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     private User getUser(UserDTO userDTO) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_phone_number", userDTO.getPhoneNumber());
+        queryWrapper.eq("user_phone_number", userDTO.getUserPhoneNumber());
         User one;
         try {
             one = getOne(queryWrapper);
@@ -95,6 +96,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             one = getOne(queryWrapper);
         } catch (Exception e) {
             throw new ServiceException(Constants.ERROR, "System error");
+        }
+        return one;
+    }
+
+    @Override
+    public User get(Integer id) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", id);
+        User one;
+        try {
+            one = getOne(queryWrapper);
+        } catch (Exception e) {
+            throw new ServiceException(Constants.ERROR, "system error");
         }
         return one;
     }

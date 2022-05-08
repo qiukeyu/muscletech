@@ -25,10 +25,10 @@ public class Card implements Serializable {
     @ApiModelProperty("card number")
     private String cardNumber;
 
-    @ApiModelProperty("related user real name")
+    @ApiModelProperty("related user's real name")
     private String cardName;
 
-    @ApiModelProperty("related user phone number")
+    @ApiModelProperty("related user's phone number")
     private String cardPhone;
 
     @ApiModelProperty("related user code")

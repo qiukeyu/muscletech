@@ -13,4 +13,5 @@ public interface IUserService extends IService<User> {
 
     void updatePassword(UserPasswordDTO userPasswordDTO);
 
+    User get(Integer id);
 }

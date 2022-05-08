@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Result;
 import com.example.demo.controller.dto.StaffDTO;
@@ -21,8 +20,8 @@ public class StaffController {
 
     @PostMapping("/login")
     public Result login(@RequestBody StaffDTO staffDTO) {
-        String number = staffDTO.getNumber();
-        String password = staffDTO.getPassword();
+        String number = staffDTO.getStaffNumber();
+        String password = staffDTO.getStaffPassword();
         if (StrUtil.isBlank(number) || StrUtil.isBlank(password)) {
             return Result.error(Constants.LACK);
         }
@@ -30,12 +29,12 @@ public class StaffController {
         return Result.success(dto);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public Result add(@RequestBody StaffDTO staffDTO) {
-        String number = staffDTO.getNumber();
-        String password = staffDTO.getPassword();
-        String firstName = staffDTO.getFirstName();
-        String lastName = staffDTO.getLastName();
+        String number = staffDTO.getStaffNumber();
+        String password = staffDTO.getStaffPassword();
+        String firstName = staffDTO.getStaffFirstName();
+        String lastName = staffDTO.getStaffLastName();
         if (StrUtil.isBlank(number) || StrUtil.isBlank(password) || StrUtil.isBlank(firstName) || StrUtil.isBlank(lastName)) {
             return Result.error(Constants.LACK, "lack of information");
         }

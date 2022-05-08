@@ -18,13 +18,13 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GenericGenerator(name = "id-generator",strategy = "increment")
+    @GenericGenerator(name = "id-generator", strategy = "increment")
     @GeneratedValue(generator = "id-generator")
     @ApiModelProperty("user code")
     private Integer userId;
 
     @ApiModelProperty("user name")
-    private String userName;
+    private String username;
 
     @ApiModelProperty("user phone number")
     private String userPhoneNumber;

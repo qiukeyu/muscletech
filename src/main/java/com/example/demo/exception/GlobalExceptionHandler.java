@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ServiceException.class)
     @ResponseBody
-    public Result handle(ServiceException se){
+    public Result handle(ServiceException se) {
         return Result.error(se.getCode(), se.getMessage());
     }
 

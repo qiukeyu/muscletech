@@ -16,19 +16,19 @@ public class BlogController {
 
 
     @PostMapping("/add")
-    public Result add(@RequestBody Blog blog){
+    public Result add(@RequestBody Blog blog) {
 
         return Result.success();
     }
 
     @PostMapping("/update")
-    public Result update(@RequestBody Blog blog){
+    public Result update(@RequestBody Blog blog) {
 
         return Result.success();
     }
 
     @GetMapping()
-    public Result findAll(){
+    public Result findAll() {
         return Result.success(blogService.list());
     }
 

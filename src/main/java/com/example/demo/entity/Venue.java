@@ -27,4 +27,19 @@ public class Venue implements Serializable {
 
     @ApiModelProperty("venue type")
     private Integer venueType;
+
+    @ApiModelProperty("center code")
+    private Integer centerId;
+
+    @ApiModelProperty("capacity")
+    private Integer capacity;
+
+    @ApiModelProperty("price")
+    private Integer price;
+
+    @ApiModelProperty("open or not")
+    private Integer open;
+
+    @ApiModelProperty("real-time headcount or occupied site")
+    private Integer realtime;
 }

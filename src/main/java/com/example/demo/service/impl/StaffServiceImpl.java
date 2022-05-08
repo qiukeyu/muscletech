@@ -36,11 +36,11 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     }
 
     @Override
-    public Staff add(StaffDTO staffDTO){
+    public Staff add(StaffDTO staffDTO) {
         Staff one = getStaffInfo(staffDTO);
         if (one == null) {
             one = new Staff();
-            staffDTO.setRole("ROLE_STAFF");
+            staffDTO.setRole("STAFF");
             BeanUtil.copyProperties(staffDTO, one, true);
             save(one);
         } else {
@@ -51,8 +51,8 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     private Staff getStaffInfo(StaffDTO staffDTO) {
         QueryWrapper<Staff> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("staff_number", staffDTO.getNumber());
-        queryWrapper.eq("staff_password", staffDTO.getPassword());
+        queryWrapper.eq("staff_number", staffDTO.getStaffNumber());
+        queryWrapper.eq("staff_password", staffDTO.getStaffPassword());
         Staff one;
         try {
             one = getOne(queryWrapper);
@@ -65,7 +65,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     @Override
     public List<Staff> findAll(StaffDTO managerDTO) {
         QueryWrapper<Staff> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("manager_id", managerDTO.getId());
+        queryWrapper.eq("manager_id", managerDTO.getStaffId());
         queryWrapper.orderByDesc("staff_id");
         List<Staff> staffList = staffMapper.selectList(queryWrapper);
         return staffList;
