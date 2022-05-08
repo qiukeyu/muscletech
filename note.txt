@@ -1,13 +1,14 @@
 修改：
 
-center_venue和venue合为一张表
-venue表加一个实时的剩余人数
-
-DELETE /staff/{id}
-如果id为不存在，还是显示successful
+center_venue和venue合为一张表     RE: 解决
+venue表加一个实时的剩余人数         RE: 表中加了，但是实时人数太抽象，我们获得的数据都是“预约”的，实时人数没有意义
 
 
-GET /venue
+DELETE /staff/{id}              RE: 逻辑上要跳转到这个url,肯定是从员工列表里进来的,id必然存在
+如果id为不存在，还是显示successful  RE: 加了无id，返回LACK报错
+
+
+GET /venue                      RE: 解决
 参数为当前登录的员工的信息，返回这个员工所在的运动中心下的所有场馆
 
 待定

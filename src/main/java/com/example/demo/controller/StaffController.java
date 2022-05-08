@@ -48,6 +48,8 @@ public class StaffController {
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
+        if (id == null)
+            return Result.error(Constants.LACK, "No id");
         QueryWrapper<Staff> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("staff_id", id);
         staffService.remove(queryWrapper);
