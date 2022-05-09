@@ -9,6 +9,7 @@ import com.example.demo.entity.Staff;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.CardMapper;
 import com.example.demo.service.ICardService;
+import com.example.demo.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,9 +22,9 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card> implements IC
     CardMapper cardMapper;
 
     @Override
-    public List<Card> findAll(UserDTO userDTO) {
+    public List<Card> findAll() {
         QueryWrapper<Card> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", userDTO.getUserId());
+        queryWrapper.eq("user_id", TokenUtils.getCurrentUser().getUserId());
         queryWrapper.orderByDesc("card_id");
         List<Card> cardList = cardMapper.selectList(queryWrapper);
         return cardList;

@@ -8,8 +8,10 @@ import java.util.List;
 
 public interface IOrderService extends IService<VenueOrder> {
 
-    List<VenueOrder> findAll(UserDTO userDTO);
+    List<VenueOrder> findAll(Integer id);
 
     VenueOrder get(Integer id);
+
+    VenueOrder add(VenueOrder order);
 
 }

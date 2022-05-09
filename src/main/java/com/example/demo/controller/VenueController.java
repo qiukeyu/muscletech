@@ -47,20 +47,20 @@ public class VenueController {
     // 已登录员工所属运动中心的所有venue
     @GetMapping()
     public Result findAll(@RequestBody StaffDTO staffDTO) {
-        return Result.success(venueService.findAll(staffDTO));
+        return Result.success(venueService.findAll());
     }
 
     @GetMapping("/{id}")
     public Result findOne(@PathVariable Integer id) {
-        QueryWrapper<Venue> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("venue_id", id);
-        venueService.remove(queryWrapper);
-        return Result.success();
+        return Result.success(venueService.get(id));
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        return Result.success(venueService.removeById(id));
+        QueryWrapper<Venue> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("venue_id", id);
+        venueService.remove(queryWrapper);
+        return Result.success();
     }
 
 }

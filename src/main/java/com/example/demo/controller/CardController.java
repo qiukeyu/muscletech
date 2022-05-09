@@ -35,8 +35,8 @@ public class CardController {
 
     // 当前用户的所有银行卡
     @GetMapping()
-    public Result findAll(@RequestBody UserDTO userDTO) {
-        return Result.success(cardService.findAll(userDTO));
+    public Result findAll() {
+        return Result.success(cardService.findAll());
     }
 
     @GetMapping("/{id}")

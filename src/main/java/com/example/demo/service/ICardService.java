@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ICardService extends IService<Card> {
 
-    List<Card> findAll(UserDTO userDTO);
+    List<Card> findAll();
 
     Card get(Integer id);
 }

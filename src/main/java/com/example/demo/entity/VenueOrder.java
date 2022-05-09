@@ -33,4 +33,10 @@ public class VenueOrder implements Serializable {
 
     @ApiModelProperty("venue order venue")
     private Integer venueId;
+
+    @ApiModelProperty("need coach or not")
+    private Integer coach;
+
+    @ApiModelProperty("final price")
+    private Integer price;
 }

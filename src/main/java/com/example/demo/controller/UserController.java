@@ -9,6 +9,7 @@ import com.example.demo.controller.dto.UserPasswordDTO;
 import com.example.demo.entity.Staff;
 import com.example.demo.entity.User;
 import com.example.demo.service.IUserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

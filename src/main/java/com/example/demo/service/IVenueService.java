@@ -11,7 +11,7 @@ public interface IVenueService extends IService<Venue> {
 
     Venue updateVenue(Integer id, Venue venue);
 
-    List<Venue> findAll(StaffDTO staffDTO);
+    List<Venue> findAll();
 
     Venue get(Integer id);
 }

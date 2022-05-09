@@ -12,6 +12,7 @@ import com.example.demo.entity.Venue;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.VenueMapper;
 import com.example.demo.service.IVenueService;
+import com.example.demo.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ import java.util.List;
 public class VenueServiceImpl extends ServiceImpl<VenueMapper, Venue> implements IVenueService {
 
     @Resource
-    VenueMapper venueMapper;
+    private VenueMapper venueMapper;
 
     @Override
     public Venue updateVenue(Integer id, Venue venue) {
@@ -34,9 +35,9 @@ public class VenueServiceImpl extends ServiceImpl<VenueMapper, Venue> implements
     }
 
     @Override
-    public List<Venue> findAll(StaffDTO staffDTO) {
+    public List<Venue> findAll() {
         QueryWrapper<Venue> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("center_id", staffDTO.getCenterId());
+        queryWrapper.eq("center_id", TokenUtils.getCurrentStaff().getCenterId());
         queryWrapper.orderByDesc("venue_id");
         List<Venue> venueList = venueMapper.selectList(queryWrapper);
         return venueList;
