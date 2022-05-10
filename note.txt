@@ -1,15 +1,18 @@
 修改：
+center_venue 表去掉
+venue 表中加上教练
+advertisement 表中加上日期（添加广告时的日期）
 
-center_venue和venue合为一张表     RE: 解决
-venue表加一个实时的剩余人数         RE: 表中加了，但是实时人数太抽象，我们获得的数据都是“预约”的，实时人数没有意义
+GET /advertisement
+传输center id
+
+POST /advertisement
+url改为 /advertisement/add，接口类型应该也要改，不是request body类型
+
+尽量在5.10号的时候把经理登录，员工、广告、场馆的增删改查功能写完测试完
 
 
-DELETE /staff/{id}              RE: 逻辑上要跳转到这个url,肯定是从员工列表里进来的,id必然存在
-如果id为不存在，还是显示successful  RE: 加了无id，返回LACK报错
 
-
-GET /venue                      RE: 解决
-参数为当前登录的员工的信息，返回这个员工所在的运动中心下的所有场馆
 
 待定
 场馆的开放时间
