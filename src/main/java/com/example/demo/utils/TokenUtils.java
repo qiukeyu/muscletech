@@ -31,7 +31,7 @@ public class TokenUtils {
 
     public static String genToken(String Number, String sign) {
         return JWT.create().withAudience(Number)
-                .withExpiresAt(DateUtil.offsetHour(new Date(), 2))
+                .withExpiresAt(DateUtil.offsetHour(new Date(), 5))
                 .sign(Algorithm.HMAC256(sign));
     }
 

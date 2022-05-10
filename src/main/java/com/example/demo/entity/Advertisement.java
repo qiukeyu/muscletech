@@ -1,8 +1,12 @@
 package com.example.demo.entity;
 
+import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.annotation.RequiredTypes;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,9 +26,15 @@ public class Advertisement implements Serializable {
     @ApiModelProperty("advertisement code")
     private Integer advertisementId;
 
-    @ApiModelProperty("advertisement name")
+    @ApiModelProperty(value = "advertisement name")
     private String advertisementName;
 
-    @ApiModelProperty("advertisement picture")
+    @ApiModelProperty("advertisement picture url")
     private String advertisementPicture;
+
+    @ApiModelProperty("created date time")
+    private String datetime;
+
+    @ApiModelProperty("center")
+    private Integer centerId;
 }

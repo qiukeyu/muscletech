@@ -11,6 +11,7 @@ import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.AdvertisementMapper;
 import com.example.demo.service.IAdvertisementService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 
@@ -24,7 +25,12 @@ public class AdvertisementServiceImpl extends ServiceImpl<AdvertisementMapper, A
         UpdateWrapper<Advertisement> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("advertisement_id", id);
         Advertisement one = getOne(updateWrapper);
-        BeanUtil.copyProperties(advertisement, one, true);
+
+        if (advertisement.getAdvertisementName() != null)
+            one.setAdvertisementName(advertisement.getAdvertisementName());
+        if (advertisement.getAdvertisementPicture() != null)
+            one.setAdvertisementPicture(advertisement.getAdvertisementPicture());
+
         advertisementMapper.update(one, updateWrapper);
         return one;
     }

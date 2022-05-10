@@ -7,6 +7,9 @@ import com.example.demo.common.Result;
 import com.example.demo.controller.dto.StaffDTO;
 import com.example.demo.entity.Venue;
 import com.example.demo.service.IVenueService;
+import com.example.demo.utils.TokenUtils;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,34 +30,44 @@ public class VenueController {
             "Swimming", 0,
             "Basketball", 1);
 
-    // 增加venue, centerId是必需的
+    @ApiOperation(value = "增加场馆", notes = "venue.venueName(允许添加的场馆名在代码里，如下：\"Badminton\"\"Tennis\"\"TableTennis\"\"Gym\"\"Swimming\"\"Basketball\")\nvenue.capacity\nvenue.price()\nvenue.coach()\nvenue.coachPrice")
     @PostMapping()
     public Result add(@RequestBody Venue venue) {
         String name = venue.getVenueName();
+        Integer capacity = venue.getCapacity();
+        Integer price = venue.getPrice();
+        String coach = venue.getCoach();
+        Integer coachPrice = venue.getCoachPrice();
         venue.setVenueType(venueType.get(name));
-        if (StrUtil.isBlank(name)) {
+        if (StrUtil.isBlank(name) || capacity == 0 || price == 0 || StrUtil.isBlank(coach) || coachPrice ==0) {
             return Result.error(Constants.LACK, "lack of information");
         }
+        venue.setCenterId(TokenUtils.getCurrentStaff().getCenterId());
         return Result.success(venueService.save(venue));
     }
 
-    // 修改更新
+    @ApiOperation(value = "修改场馆信息", notes = "id\nvenue.venueName(允许添加的场馆名在代码里，如下：\"Badminton\"\"Tennis\"\"TableTennis\"\"Gym\"\"Swimming\"\"Basketball\")\nvenue.capacity\nvenue.price()\nvenue.coach()\nvenue.coachPrice")
     @PostMapping("/{id}")
     public Result update(@PathVariable Integer id, @RequestBody Venue venue) {
+        String name = venue.getVenueName();
+        if (!StrUtil.isBlank(name))
+            venue.setVenueType(venueType.get(name));
         return Result.success(venueService.updateVenue(id, venue));
     }
 
-    // 已登录员工所属运动中心的所有venue
+    @ApiOperation(value = "当前登录员工所属运动中心的所有场馆")
     @GetMapping()
-    public Result findAll(@RequestBody StaffDTO staffDTO) {
+    public Result findAll() {
         return Result.success(venueService.findAll());
     }
 
+    @ApiOperation(value = "某一场馆")
     @GetMapping("/{id}")
     public Result findOne(@PathVariable Integer id) {
         return Result.success(venueService.get(id));
     }
 
+    @ApiOperation(value = "删除场馆")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
         QueryWrapper<Venue> queryWrapper = new QueryWrapper<>();

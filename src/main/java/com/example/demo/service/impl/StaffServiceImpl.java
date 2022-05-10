@@ -37,11 +37,13 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
 
     @Override
     public Staff add(StaffDTO staffDTO) {
-        Staff one = getStaffInfo(staffDTO);
-        if (one == null) {
+        Staff one;
+        if (!checkStaffExist(staffDTO)) {
             one = new Staff();
-            staffDTO.setRole("STAFF");
+            staffDTO.setRole("ROLE_STAFF");
             BeanUtil.copyProperties(staffDTO, one, true);
+            one.setManagerId(TokenUtils.getCurrentStaff().getStaffId());
+            one.setCenterId(TokenUtils.getCurrentStaff().getCenterId());
             save(one);
         } else {
             throw new ServiceException(Constants.WRONG, "staff number exist");
@@ -62,10 +64,18 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         return one;
     }
 
-    @Override
-    public List<Staff> findAll(StaffDTO managerDTO) {
+    private Boolean checkStaffExist(StaffDTO staffDTO) {
         QueryWrapper<Staff> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("manager_id", managerDTO.getStaffId());
+        queryWrapper.eq("staff_number", staffDTO.getStaffNumber());
+        if (getOne(queryWrapper) != null)
+            return true;
+        return false;
+    }
+
+    @Override
+    public List<Staff> findAll() {
+        QueryWrapper<Staff> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("manager_id", TokenUtils.getCurrentStaff().getStaffId());
         queryWrapper.orderByDesc("staff_id");
         List<Staff> staffList = staffMapper.selectList(queryWrapper);
         return staffList;
@@ -91,6 +101,20 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         Staff one = getOne(updateWrapper);
         BeanUtil.copyProperties(staffDTO, one, true);
         staffMapper.update(one, updateWrapper);
+        return one;
+    }
+
+    @Override
+    public Staff addManager(StaffDTO managerDTO) {
+        Staff one;
+        if (!checkStaffExist(managerDTO)) {
+            one = new Staff();
+            managerDTO.setRole("ROLE_MANAGER");
+            BeanUtil.copyProperties(managerDTO, one, true);
+            save(one);
+        } else {
+            throw new ServiceException(Constants.WRONG, "staff number exist");
+        }
         return one;
     }
 }

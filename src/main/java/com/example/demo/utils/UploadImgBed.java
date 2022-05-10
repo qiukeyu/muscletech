@@ -5,6 +5,7 @@ import cn.hutool.core.codec.Base64;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class UploadImgBed {
 
@@ -19,23 +20,31 @@ public class UploadImgBed {
 
     public static final String API_CREATE_POST = "https://gitee.com/api/v5/repos/%s/%s/contents/%s";
 
+
     /**
      * 生成创建(获取、删除)的指定文件路径
      * @param type advertisement(0), userAvatar(1), staffAvatar(2)
-     * @param name
      * @param originalFilename
      * @return
      */
-    public static String createUploadFileUrl(Integer type, String name, String originalFilename){
+    public static String createUploadFileUrl(Integer type, String originalFilename){
         //获取文件后缀
         String suffix = originalFilename.contains(".") ? originalFilename.substring(originalFilename.indexOf('.')) : null;
+        //分类存储
+        String path;
+        switch (type){
+            case 0 -> path = "advertisement";
+            case 1 -> path = "userAvatar";
+            case 2 -> path = "staffAvatar";
+            default -> path = "others";
+        }
         //拼接存储的图片名称
-        String fileName = type.toString() + "_" + name +suffix;
+        String fileName =  "/" + System.currentTimeMillis() +" "+ UUID.randomUUID() +suffix;
         //填充请求路径
         String url = String.format(UploadImgBed.API_CREATE_POST,
                 UploadImgBed.OWNER,
                 UploadImgBed.REPO,
-                UploadImgBed.PATH+fileName);
+                UploadImgBed.PATH + path + fileName);
         return url;
     }
 

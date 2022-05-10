@@ -12,9 +12,11 @@ public interface IStaffService extends IService<Staff> {
 
     Staff add(StaffDTO staffDTO);
 
-    List<Staff> findAll(StaffDTO managerDTO);
+    List<Staff> findAll();
 
     Staff get(Integer id);
 
     Staff updateStaff(Integer id, StaffDTO staffDTO);
+
+    Staff addManager(StaffDTO managerDTO);
 }
