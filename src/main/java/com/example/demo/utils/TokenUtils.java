@@ -29,8 +29,8 @@ public class TokenUtils {
     @Resource
     private IUserService userService;
 
-    public static String genToken(String Number, String sign) {
-        return JWT.create().withAudience(Number)
+    public static String genToken(String id, String sign) {
+        return JWT.create().withAudience(id)
                 .withExpiresAt(DateUtil.offsetHour(new Date(), 5))
                 .sign(Algorithm.HMAC256(sign));
     }
@@ -41,8 +41,8 @@ public class TokenUtils {
             request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
-                String userId = JWT.decode(token).getAudience().get(0);
-                return staticStaffService.getById(Integer.valueOf(userId));
+                String staffId = JWT.decode(token).getAudience().get(0);
+                return staticStaffService.get(Integer.valueOf(staffId));
             }
         } catch (Exception e) {
             return null;
@@ -56,7 +56,7 @@ public class TokenUtils {
             String token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
                 String userId = JWT.decode(token).getAudience().get(0);
-                return staticUserService.getById(Integer.valueOf(userId));
+                return staticUserService.get(Integer.valueOf(userId));
             }
         } catch (Exception e) {
             return null;

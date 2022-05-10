@@ -27,7 +27,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
         Staff one = getStaffInfo(staffDTO);
         if (one != null) {
             BeanUtil.copyProperties(one, staffDTO, true);
-            String token = TokenUtils.genToken(one.getStaffNumber(), one.getStaffPassword());
+            String token = TokenUtils.genToken(one.getStaffId().toString(), one.getStaffPassword());
             staffDTO.setToken(token);
             return staffDTO;
         } else {

@@ -36,7 +36,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             BeanUtil.copyProperties(userDTO, one, true);
             save(one);
         }
-        String token = TokenUtils.genToken(one.getUserPhoneNumber(), "verification");
+        String token = TokenUtils.genToken(one.getUserId().toString(), "verification");
         userDTO.setToken(token);
         return userDTO;
     }
@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //            if (passwordEncoder.matches(userDTO.getPassword(),one.getUserPassword())) {
             if (true) {
                 BeanUtil.copyProperties(one, userDTO, true);
-                String token = TokenUtils.genToken(one.getUserPhoneNumber(), one.getUserPassword());
+                String token = TokenUtils.genToken(one.getUserId().toString(), one.getUserPassword());
                 userDTO.setToken(token);
                 return userDTO;
             } else {
