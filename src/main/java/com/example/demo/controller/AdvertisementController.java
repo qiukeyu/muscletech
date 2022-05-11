@@ -30,20 +30,21 @@ public class AdvertisementController {
     private IAdvertisementService advertisementService;
 
     @PostMapping()
-    @ApiOperation(value = "添加广告", notes = "advertise.advertisementName\nfile")
-    public Result add(@RequestBody Advertisement advertisement, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-        String name = advertisement.getAdvertisementName();
+    @ApiOperation(value = "添加广告", notes = "name\nfile")
+    public Result add(@RequestParam("name") String name, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        Advertisement advertisement = new Advertisement();
+        advertisement.setAdvertisementName(name);
         String originalFilename = multipartFile.getOriginalFilename();
+        String targetURL = UploadImgBed.createUploadFileUrl(0, originalFilename);
         if (StrUtil.isBlank(name) || StrUtil.isBlank(originalFilename)) {
             return Result.error(Constants.LACK, "lack of information");
         }
 
-        String targetURL = UploadImgBed.createUploadFileUrl(0, originalFilename);
         Map<String, Object> uploadBodyMap = UploadImgBed.getUploadBodyMap(multipartFile.getBytes());
         String JSONResult = HttpUtil.post(targetURL, uploadBodyMap);
         JSONObject jsonObj = JSONUtil.parseObj(JSONResult);
-        if(jsonObj == null || jsonObj.getObj("commit") == null){
-            return Result.error(Constants.ERROR);
+        if(jsonObj.getObj("commit") == null){
+            return Result.error(Constants.ERROR, "can't upload to ImageBed");
         }
         JSONObject content = JSONUtil.parseObj(jsonObj.getObj("content"));
 
@@ -58,15 +59,17 @@ public class AdvertisementController {
 
 
     @PostMapping("/{id}")
-    @ApiOperation(value = "修改广告", notes = "id\nadvertisement.advertisementName（内容可以为空）\nfile（内容可以为空）")
-    public Result update(@PathVariable Integer id, @RequestBody Advertisement advertisement, @RequestParam("file") MultipartFile multipartFile)throws IOException {
+    @ApiOperation(value = "修改广告", notes = "id\nname（内容可以为空）\nfile（内容可以为空）")
+    public Result update(@PathVariable Integer id, @RequestParam("name") String name, @RequestParam("file") MultipartFile multipartFile)throws IOException {
+        Advertisement advertisement = new Advertisement();
+        advertisement.setAdvertisementName(name);
         if (multipartFile != null) {
             String originalFilename = multipartFile.getOriginalFilename();
             String targetURL = UploadImgBed.createUploadFileUrl(0, originalFilename);
             Map<String, Object> uploadBodyMap = UploadImgBed.getUploadBodyMap(multipartFile.getBytes());
             String JSONResult = HttpUtil.post(targetURL, uploadBodyMap);
             JSONObject jsonObj = JSONUtil.parseObj(JSONResult);
-            if(jsonObj == null || jsonObj.getObj("commit") == null){
+            if(jsonObj.getObj("commit") == null){
                 return Result.error(Constants.ERROR);
             }
             JSONObject content = JSONUtil.parseObj(jsonObj.getObj("content"));
