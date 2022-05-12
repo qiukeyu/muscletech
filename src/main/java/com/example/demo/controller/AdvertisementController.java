@@ -60,9 +60,10 @@ public class AdvertisementController {
 
     @PostMapping("/{id}")
     @ApiOperation(value = "修改广告", notes = "id\nname（内容可以为空）\nfile（内容可以为空）")
-    public Result update(@PathVariable Integer id, @RequestParam("name") String name, @RequestParam("file") MultipartFile multipartFile)throws IOException {
+    public Result update(@PathVariable Integer id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "file", required = false) MultipartFile multipartFile)throws IOException {
         Advertisement advertisement = new Advertisement();
-        advertisement.setAdvertisementName(name);
+        if (name != null)
+            advertisement.setAdvertisementName(name);
         if (multipartFile != null) {
             String originalFilename = multipartFile.getOriginalFilename();
             String targetURL = UploadImgBed.createUploadFileUrl(0, originalFilename);
