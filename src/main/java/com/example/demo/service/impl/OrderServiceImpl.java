@@ -3,9 +3,6 @@ package com.example.demo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
-import com.example.demo.controller.dto.StaffDTO;
-import com.example.demo.controller.dto.UserDTO;
-import com.example.demo.entity.Staff;
 import com.example.demo.entity.Venue;
 import com.example.demo.entity.VenueOrder;
 import com.example.demo.exception.ServiceException;
@@ -30,7 +27,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, VenueOrder> imple
     @Override
     public List<VenueOrder> findAll(Integer id) {
         QueryWrapper<VenueOrder> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id", TokenUtils.getCurrentUser().getUserId());
+        queryWrapper.eq("user_id", id);
         queryWrapper.orderByDesc("order_id");
         List<VenueOrder> orderList = orderMapper.selectList(queryWrapper);
         return orderList;
@@ -50,7 +47,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, VenueOrder> imple
     }
 
     @Override
-    public VenueOrder add(VenueOrder order){
+    public VenueOrder add(VenueOrder order) {
         QueryWrapper<Venue> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("venue_id", order.getVenueId());
         Venue venue;
@@ -64,7 +61,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, VenueOrder> imple
         if (order.getCoach() == 0) {
             order.setPrice(venuePrice);
         } else {
-            order.setPrice(venuePrice+coachPrice);
+            order.setPrice(venuePrice + coachPrice);
         }
         save(order);
         return order;

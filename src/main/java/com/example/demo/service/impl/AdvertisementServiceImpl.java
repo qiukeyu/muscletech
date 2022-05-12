@@ -1,17 +1,14 @@
 package com.example.demo.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
 import com.example.demo.entity.Advertisement;
-import com.example.demo.entity.Staff;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.AdvertisementMapper;
 import com.example.demo.service.IAdvertisementService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 

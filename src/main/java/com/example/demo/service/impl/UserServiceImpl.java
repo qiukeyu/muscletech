@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
 import com.example.demo.controller.dto.UserDTO;
 import com.example.demo.controller.dto.UserPasswordDTO;
-import com.example.demo.entity.Staff;
 import com.example.demo.entity.User;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.UserMapper;
@@ -33,8 +32,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         } else {
             one = new User();
             userDTO.setRole("ROLE_USER");
+            userDTO.setUsername("user");
             BeanUtil.copyProperties(userDTO, one, true);
             save(one);
+            one = getUser(userDTO);
         }
         String token = TokenUtils.genToken(one.getUserId().toString(), "verification");
         userDTO.setToken(token);
@@ -50,7 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             throw new ServiceException(Constants.WRONG, "No password set");
         } else {
 //            if (passwordEncoder.matches(userDTO.getPassword(),one.getUserPassword())) {
-            if (true) {
+            if (userDTO.getUserPassword().equals(one.getUserPassword())) {
                 BeanUtil.copyProperties(one, userDTO, true);
                 String token = TokenUtils.genToken(one.getUserId().toString(), one.getUserPassword());
                 userDTO.setToken(token);

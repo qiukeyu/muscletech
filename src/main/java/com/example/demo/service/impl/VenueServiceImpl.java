@@ -1,14 +1,10 @@
 package com.example.demo.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
-import com.example.demo.controller.dto.StaffDTO;
-import com.example.demo.entity.Advertisement;
-import com.example.demo.entity.Staff;
 import com.example.demo.entity.Venue;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.VenueMapper;

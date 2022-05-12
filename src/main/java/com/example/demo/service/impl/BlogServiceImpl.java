@@ -1,13 +1,10 @@
 package com.example.demo.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
-import com.example.demo.controller.dto.UserDTO;
 import com.example.demo.entity.Blog;
-import com.example.demo.entity.Venue;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.mapper.BlogMapper;
 import com.example.demo.service.IBlogService;
@@ -27,7 +24,10 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         UpdateWrapper<Blog> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("blog_id", id);
         Blog one = getOne(updateWrapper);
-        BeanUtil.copyProperties(blog, one, true);
+        if (blog.getBlogTitle() != null)
+            one.setBlogTitle(blog.getBlogTitle());
+        if (blog.getBlogContent() != null)
+            one.setBlogContent(blog.getBlogContent());
         blogMapper.update(one, updateWrapper);
         return one;
     }

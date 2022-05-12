@@ -67,9 +67,7 @@ public class StaffServiceImpl extends ServiceImpl<StaffMapper, Staff> implements
     private Boolean checkStaffExist(StaffDTO staffDTO) {
         QueryWrapper<Staff> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("staff_number", staffDTO.getStaffNumber());
-        if (getOne(queryWrapper) != null)
-            return true;
-        return false;
+        return getOne(queryWrapper) != null;
     }
 
     @Override

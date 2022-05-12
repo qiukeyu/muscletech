@@ -8,7 +8,6 @@ public class UserDTO {
     private String username;
     private String userPassword;
     private String userPhoneNumber;
-    private String verification;
     private String userAvatar;
     private String token;
     private String role;

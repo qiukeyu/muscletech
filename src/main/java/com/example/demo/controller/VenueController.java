@@ -4,16 +4,15 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Result;
-import com.example.demo.controller.dto.StaffDTO;
 import com.example.demo.entity.Venue;
 import com.example.demo.service.IVenueService;
 import com.example.demo.utils.TokenUtils;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/venue")
@@ -39,10 +38,11 @@ public class VenueController {
         String coach = venue.getCoach();
         Integer coachPrice = venue.getCoachPrice();
         venue.setVenueType(venueType.get(name));
-        if (StrUtil.isBlank(name) || capacity == 0 || price == 0 || StrUtil.isBlank(coach) || coachPrice ==0) {
+        if (StrUtil.isBlank(name) || capacity == 0 || price == 0 || StrUtil.isBlank(coach) || coachPrice == 0) {
             return Result.error(Constants.LACK, "lack of information");
         }
-        venue.setCenterId(TokenUtils.getCurrentStaff().getCenterId());
+        venue.setOpen(0);
+        venue.setCenterId(Objects.requireNonNull(TokenUtils.getCurrentStaff()).getCenterId());
         return Result.success(venueService.save(venue));
     }
 

@@ -37,7 +37,7 @@ public class Venue implements Serializable {
     @ApiModelProperty("price")
     private Integer price;
 
-    @ApiModelProperty("open or not")
+    @ApiModelProperty("open(0) or not")
     private Integer open;
 
     @ApiModelProperty("coach name")
@@ -46,6 +46,4 @@ public class Venue implements Serializable {
     @ApiModelProperty("coach price")
     private Integer coachPrice;
 
-    @ApiModelProperty("real-time headcount or occupied site")
-    private Integer realtime;
 }

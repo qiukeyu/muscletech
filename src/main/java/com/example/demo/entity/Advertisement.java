@@ -1,12 +1,8 @@
 package com.example.demo.entity;
 
-import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.annotation.RequiredTypes;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

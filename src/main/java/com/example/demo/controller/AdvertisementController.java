@@ -43,7 +43,7 @@ public class AdvertisementController {
         Map<String, Object> uploadBodyMap = UploadImgBed.getUploadBodyMap(multipartFile.getBytes());
         String JSONResult = HttpUtil.post(targetURL, uploadBodyMap);
         JSONObject jsonObj = JSONUtil.parseObj(JSONResult);
-        if(jsonObj.getObj("commit") == null){
+        if (jsonObj.getObj("commit") == null) {
             return Result.error(Constants.ERROR, "can't upload to ImageBed");
         }
         JSONObject content = JSONUtil.parseObj(jsonObj.getObj("content"));
@@ -60,7 +60,7 @@ public class AdvertisementController {
 
     @PostMapping("/{id}")
     @ApiOperation(value = "修改广告", notes = "id\nname（内容可以为空）\nfile（内容可以为空）")
-    public Result update(@PathVariable Integer id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "file", required = false) MultipartFile multipartFile)throws IOException {
+    public Result update(@PathVariable Integer id, @RequestParam(value = "name", required = false) String name, @RequestParam(value = "file", required = false) MultipartFile multipartFile) throws IOException {
         Advertisement advertisement = new Advertisement();
         if (name != null)
             advertisement.setAdvertisementName(name);
@@ -70,7 +70,7 @@ public class AdvertisementController {
             Map<String, Object> uploadBodyMap = UploadImgBed.getUploadBodyMap(multipartFile.getBytes());
             String JSONResult = HttpUtil.post(targetURL, uploadBodyMap);
             JSONObject jsonObj = JSONUtil.parseObj(JSONResult);
-            if(jsonObj.getObj("commit") == null){
+            if (jsonObj.getObj("commit") == null) {
                 return Result.error(Constants.ERROR);
             }
             JSONObject content = JSONUtil.parseObj(jsonObj.getObj("content"));
