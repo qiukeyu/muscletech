@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/card")
 public class CardController {
 

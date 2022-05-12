@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/venue")
 public class VenueController {
 

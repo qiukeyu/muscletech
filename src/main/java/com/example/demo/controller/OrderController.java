@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/order")
 public class OrderController {
 

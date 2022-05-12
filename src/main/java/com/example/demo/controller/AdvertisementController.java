@@ -23,6 +23,7 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("/advertisement")
 public class AdvertisementController {
 
