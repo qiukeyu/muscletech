@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.Constants;
+import com.example.demo.entity.Center;
+import com.example.demo.entity.Staff;
 import com.example.demo.entity.Venue;
 import com.example.demo.exception.ServiceException;
+import com.example.demo.mapper.CenterMapper;
 import com.example.demo.mapper.VenueMapper;
 import com.example.demo.service.IVenueService;
 import com.example.demo.utils.TokenUtils;
@@ -14,12 +17,29 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class VenueServiceImpl extends ServiceImpl<VenueMapper, Venue> implements IVenueService {
 
     @Resource
     private VenueMapper venueMapper;
+
+    @Resource
+    private CenterMapper centerMapper;
+
+    @Override
+    public  Venue add(Venue venue) {
+        Integer centerId = Objects.requireNonNull(TokenUtils.getCurrentStaff()).getCenterId();
+        QueryWrapper<Center> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("center_id", centerId);
+        Center center = centerMapper.selectOne(queryWrapper);
+        venue.setCenterId(centerId);
+        venue.setCenterName(center.getCenterName());
+        save(venue);
+        return venue;
+    }
+
 
     @Override
     public Venue updateVenue(Integer id, Venue venue) {
@@ -72,5 +92,15 @@ public class VenueServiceImpl extends ServiceImpl<VenueMapper, Venue> implements
             throw new ServiceException(Constants.ERROR, "system error");
         }
         return one;
+    }
+
+    @Override
+    public List<Venue> find(String venue, String  center) {
+        QueryWrapper<Venue> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("venue_name", venue);
+        queryWrapper.eq("center_name", center);
+        queryWrapper.orderByDesc("venue_id");
+        List<Venue> venueList = venueMapper.selectList(queryWrapper);
+        return venueList;
     }
 }

@@ -49,7 +49,6 @@ public class UserController {
         } catch (ServiceException e) {
             return Result.error(e.getCode(), e.getMessage());
         }
-
     }
 
 

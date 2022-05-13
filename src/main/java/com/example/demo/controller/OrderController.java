@@ -19,8 +19,9 @@ public class OrderController {
     private IOrderService orderService;
 
     @PostMapping()
-    @ApiOperation(value = "增加订单", notes = "venueId\ncoach(是否需要,默认0为不需要,否则1)\norderDate\norderTime(第几场)")
+    @ApiOperation(value = "增加订单", notes = "venueId\norderDate\norderTime(第几场)")
     public Result add(@RequestBody VenueOrder order) {
+        order.setCoach(0);
         order.setUserId(Objects.requireNonNull(TokenUtils.getCurrentUser()).getUserId());
         return Result.success(orderService.add(order));
     }

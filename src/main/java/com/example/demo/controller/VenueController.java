@@ -1,18 +1,19 @@
 package com.example.demo.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.common.Constants;
 import com.example.demo.common.Result;
 import com.example.demo.entity.Venue;
 import com.example.demo.service.IVenueService;
-import com.example.demo.utils.TokenUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @CrossOrigin
@@ -43,8 +44,7 @@ public class VenueController {
             return Result.error(Constants.LACK, "lack of information");
         }
         venue.setOpen(0);
-        venue.setCenterId(Objects.requireNonNull(TokenUtils.getCurrentStaff()).getCenterId());
-        return Result.success(venueService.save(venue));
+        return Result.success(venueService.add(venue));
     }
 
     @ApiOperation(value = "修改场馆信息", notes = "id\nvenue.venueName(允许添加的场馆名在代码里，如下：\"Badminton\"\"Tennis\"\"TableTennis\"\"Gym\"\"Swimming\"\"Basketball\")\nvenue.capacity\nvenue.price()\nvenue.coach()\nvenue.coachPrice")
@@ -75,6 +75,12 @@ public class VenueController {
         queryWrapper.eq("venue_id", id);
         venueService.remove(queryWrapper);
         return Result.success();
+    }
+
+    @ApiOperation(value = "用户端查询可用场馆", notes = "venue.venueName\nvenue.centerName")
+    @PostMapping("/app")
+    public Result find(@RequestBody Venue venue) {
+        return Result.success(venueService.find(venue.getVenueName(), venue.getCenterName()));
     }
 
 }

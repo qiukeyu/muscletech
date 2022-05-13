@@ -9,7 +9,11 @@ public interface IVenueService extends IService<Venue> {
 
     Venue updateVenue(Integer id, Venue venue);
 
+    Venue add(Venue venue);
+
     List<Venue> findAll();
 
     Venue get(Integer id);
+
+    List<Venue> find(String venue, String  center);
 }

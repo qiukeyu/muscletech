@@ -31,6 +31,9 @@ public class Venue implements Serializable {
     @ApiModelProperty("center code")
     private Integer centerId;
 
+    @ApiModelProperty("center name")
+    private String centerName;
+
     @ApiModelProperty("capacity")
     private Integer capacity;
 

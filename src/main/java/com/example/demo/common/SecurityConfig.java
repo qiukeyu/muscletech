@@ -14,11 +14,7 @@
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http.authorizeRequests()
-//                .antMatchers("/staff/**").hasRole("STAFF")
-//                .antMatchers("/staff/manage").hasRole("MANAGER")
-//                .antMatchers("/user/login/**").permitAll()
-//                .antMatchers("/user/**").hasRole("USER")
-//                .antMatchers("/app/**").permitAll()
+//                .antMatchers("/staff/login").permitAll()
 //                .anyRequest().authenticated()
 //                .and()
 //            .formLogin()
