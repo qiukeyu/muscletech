@@ -4,7 +4,7 @@
     <persistence-units>
       <persistence-unit name="Default">
         <packages>
-          <package value="com.example.demo" />
+          <package value="com.muscletech" />
         </packages>
       </persistence-unit>
     </persistence-units>
